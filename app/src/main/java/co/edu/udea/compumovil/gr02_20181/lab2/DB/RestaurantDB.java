@@ -1,4 +1,4 @@
-package co.edu.udea.compumovil.gr02_20181.lab2;
+package co.edu.udea.compumovil.gr02_20181.lab2.DB;
 
 import android.provider.BaseColumns;
 

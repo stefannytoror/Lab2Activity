@@ -1,6 +1,8 @@
-package co.edu.udea.compumovil.gr02_20181.lab2;
+package co.edu.udea.compumovil.gr02_20181.lab2.DB;
 
 import android.content.ContentValues;
+
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.RestaurantDB;
 
 
 public class UserStructure {
