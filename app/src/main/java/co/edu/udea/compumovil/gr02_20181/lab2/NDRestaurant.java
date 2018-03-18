@@ -34,12 +34,15 @@ public class NDRestaurant extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int REQUEST_IMAGE_GALLERY = 31;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ndrestaurant);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //poner en el fragment de bebidas
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -106,21 +109,17 @@ public class NDRestaurant extends AppCompatActivity
         int id = item.getItemId();
         Fragment fragment = null;
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-            fragment = new AddDrinksFragment();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container,fragment)
-                    .commit();
-        } else if (id == R.id.nav_slideshow) {
+        if (id == R.id.nav_plates) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_drinks) {
 
-        } else if (id == R.id.nav_share) {
+                fragment = new DrinksFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container,fragment)
+                        .commit();
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_profile) {
 
         }
 
@@ -133,8 +132,6 @@ public class NDRestaurant extends AppCompatActivity
 
     public void photoGallery(View v) {
 
-        String TAG = "que";
-        Log.d(TAG,"entro a photogallery");
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);

@@ -7,8 +7,8 @@ public class RestaurantDB {
     public static final String DB_RESTAURANT_NAME = "lab2activity.db"; //DB name
     public static final int DB_VERSION = 1; //DB version
     public static final String TABLE_USER = "users";//Name of users table
-    /*public static final String TABLE_PLATES = "plates"; //Name of plates table
-    public static final String TABLE_DRINKS = "drinks";//Name of drinks table*/
+    //public static final String TABLE_PLATES = "plates"; //Name of plates table
+    public static final String TABLE_DRINKS = "drinks";//Name of drinks table
 
 
     //Columns of the table
@@ -21,5 +21,14 @@ public class RestaurantDB {
         public static final String USER_STATE = "user_state"; //podria ser mejor un numero
     }
 
-    //the rest of the tables here
+    public class ColumnDrinks {
+        //public static final String ID = BaseColumns._ID; El ID se suele definir así por convención
+        public static final String DRINK_NAME = "drink_name";
+        public static final String DRINK_PRICE = "drink_price";
+        public static final String DRINK_PICTURE = "drink_picture";
+        public static final String DRINK_INGREDIENTS = "drink_ingredients";
+
+    }
+
+    //table plates here
 }

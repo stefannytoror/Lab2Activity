@@ -31,4 +31,12 @@
     <string name="btnRegistrarBebida">Añadir Bebida</string>
     <string name="itemMenuBorrar">Borrrar</string>
     <string name="itemMenuSalir">Salir</string>
+
+
+    <string name="txtNombreRestaurante">Aunt Daisys</string>
+    <string name="txtSlogan">Main Street Diner</string>
+
+    <string name="txtNDPlatos">Platos</string>
+    <string name="txtNDBebidas">Bebidas</string>
+    <string name="txtNDPerfil">Perfil</string>
 </resources>
