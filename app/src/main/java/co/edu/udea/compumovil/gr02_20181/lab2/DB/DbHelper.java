@@ -58,12 +58,12 @@ public class DbHelper  extends SQLiteOpenHelper {
         Bitmap imageBitmap;
         String picture;
 
-        //imageBitmap = BitmapFactory.decodeResource(cont.getResources(),R.drawable.);
-        //picture = encodeImage(imageBitmap);
+        imageBitmap = BitmapFactory.decodeResource(cont.getResources(),R.drawable.future);
+        picture = encodeImage(imageBitmap);
         DrinksStructure drink2 = new DrinksStructure("Jugo muy maluco",2500,
-                "Agua y veneno","la imagen2");
+                "Agua y veneno",picture);
         DrinksStructure drink1 = new DrinksStructure("Jugo muy deli",2000,
-                "Agua y frutilla picadilla","la imagen");
+                "Agua y frutilla picadilla",picture);
 
         db.insert(RestaurantDB.TABLE_DRINKS, null, drink2.toContentValues());
         db.insert(RestaurantDB.TABLE_DRINKS, null, drink1.toContentValues());

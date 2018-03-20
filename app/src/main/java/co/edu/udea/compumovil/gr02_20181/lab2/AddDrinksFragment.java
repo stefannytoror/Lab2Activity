@@ -1,13 +1,23 @@
 package co.edu.udea.compumovil.gr02_20181.lab2;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.DbHelper;
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.DrinksStructure;
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.RestaurantDB;
 
 
 /**
@@ -67,8 +77,8 @@ public class AddDrinksFragment extends Fragment implements View.OnClickListener 
                              Bundle savedInstanceState) {
 
         View viewDrinks = inflater.inflate(R.layout.fragment_add_drinks, container, false);
-        /*Button addDrinkButton = (Button) viewDrinks.findViewById(R.id.btnAgregarBebida);
-        addDrinkButton.setOnClickListener(this);*/
+        Button addDrinkButton = (Button) viewDrinks.findViewById(R.id.btnAgregarBebida);
+        addDrinkButton.setOnClickListener(this);
 
         // Inflate the layout for this fragment
         return viewDrinks;
@@ -115,11 +125,48 @@ public class AddDrinksFragment extends Fragment implements View.OnClickListener 
 
     public void setPhoto(String photo){this.photo = photo;}
 
-    public void onClick(View view){
+    @Override
+    public void onClick(View v){
 
+        if(v.getId()== R.id.btnAgregarBebida) {
         /*Button imageButton = (Button) view.findViewById(R.id.btnAgregarImgBebida);*/
 
+            EditText addDrink;
+            String nameDrinkDB, priceDrinkDB, ingredientsDrinkDB;
+
+            addDrink = (EditText) getView().findViewById(R.id.txtNombreBebida);
+            nameDrinkDB = addDrink.getText().toString();
 
 
+            addDrink = (EditText) getView().findViewById(R.id.txtPrecioBebida);
+            priceDrinkDB = addDrink.getText().toString();
+
+            addDrink = (EditText) getView().findViewById(R.id.txtIngredientesBebida);
+            ingredientsDrinkDB = addDrink.getText().toString();
+
+
+            if (photo == null) {
+                Toast.makeText(getContext(), "no coge la foto", Toast.LENGTH_SHORT).show();
+            }
+
+            if (nameDrinkDB.equals("") || priceDrinkDB.equals("") || ingredientsDrinkDB.equals("") || photo == null) {
+                Toast.makeText(getContext(), "Información Incompleta", Toast.LENGTH_SHORT).show();
+            } else {
+
+                int priceDrinkDb = Integer.parseInt(priceDrinkDB);
+
+                DbHelper dbHelper = new DbHelper(getContext());
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                DrinksStructure drink_structure = new DrinksStructure(nameDrinkDB, priceDrinkDb, ingredientsDrinkDB, photo);
+
+                //insert in  DB
+                db.insert(RestaurantDB.TABLE_DRINKS, null, drink_structure.toContentValues());
+
+                Fragment drinksf = new DrinksFragment();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction().replace(R.id.container, drinksf).commit();
+            }
+
+        }
     }
 }

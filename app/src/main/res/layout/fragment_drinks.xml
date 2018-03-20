@@ -25,7 +25,8 @@
             android:clickable="true"
             android:src="@android:drawable/btn_star_big_off"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="newDrink"/>
 
     </android.support.constraint.ConstraintLayout>
 

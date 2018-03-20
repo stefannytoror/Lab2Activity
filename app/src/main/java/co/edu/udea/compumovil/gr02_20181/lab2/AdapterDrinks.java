@@ -61,11 +61,13 @@ public class AdapterDrinks  extends RecyclerView.Adapter<AdapterDrinks.DrinksVie
         holder.priceDrink.setText(String.valueOf(price));
 
 
-        /*byte[] picture_drink = Base64.decode(drinksArray.get(position).getDrink_picture(),Base64.DEFAULT);
+        byte[] picture_drink = Base64.decode(drinksArray.get(position).getDrink_picture(),Base64.DEFAULT);
         Bitmap bit = BitmapFactory.decodeByteArray(picture_drink, 0, picture_drink.length);
-        holder.pictureDrink.setImageBitmap(bit);*/
+        holder.pictureDrink.setImageBitmap(bit);
+
 
         holder.cardViewDrink.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();

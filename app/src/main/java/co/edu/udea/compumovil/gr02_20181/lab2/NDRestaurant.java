@@ -42,23 +42,6 @@ public class NDRestaurant extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //poner en el fragment de bebidas
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {/*
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-
-
-                Fragment fragment = new AddDrinksFragment();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container,fragment)
-                        .commit();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -167,7 +150,10 @@ public class NDRestaurant extends AppCompatActivity
 
     public void newDrink(View view){
         Fragment fragment = new AddDrinksFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment,"drinkFragmentTag").addToBackStack(null).commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container,fragment,"drinkFragmentTag")
+                .addToBackStack(null).commit();
 
     }
 }
