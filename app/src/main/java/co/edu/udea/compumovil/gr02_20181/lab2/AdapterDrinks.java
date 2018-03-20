@@ -73,7 +73,7 @@ public class AdapterDrinks  extends RecyclerView.Adapter<AdapterDrinks.DrinksVie
                 Bundle b = new Bundle();
                 b.putString("nameDrink",drinksArray.get(position).getDrink_name());
                 b.putInt("priceDrink",drinksArray.get(position).getDrink_price());
-                b.putString("ingredients",drinksArray.get(position).getDrink_ingredients());
+                b.putString("ingredientsDrinks",drinksArray.get(position).getDrink_ingredients());
                 b.putString("pictureDrinks",drinksArray.get(position).getDrink_picture());
                 listen.getPosition(b);
             }
