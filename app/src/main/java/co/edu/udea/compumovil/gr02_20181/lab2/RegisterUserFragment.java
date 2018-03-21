@@ -1,14 +1,22 @@
 package co.edu.udea.compumovil.gr02_20181.lab2;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.DbHelper;
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.RestaurantDB;
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.UserStructure;
 
 
 /**
@@ -114,19 +122,71 @@ public class RegisterUserFragment extends Fragment implements  View.OnClickListe
     }
 
     public void onClick(View view){
-        EditText tctNameUserRegister, txtEmailUserRegister, txtPasswordUserRegister;
-        editTextName = (EditText) getView().findViewById(R.id.registrarNombre);
-        editTextUser = (EditText) getView().findViewById(R.id.registrarUsuario);
-        editTextMail = (EditText) getView().findViewById(R.id.registrarCorreo);
-        editTextAge = (EditText) getView().findViewById(R.id.registrarEdad);
-        editTextPassword = (EditText) getView().findViewById(R.id.registrarContraseña);
+        EditText txtNameUserRegister, txtEmailUserRegister, txtPasswordUserRegister;
+        txtNameUserRegister = (EditText) getView().findViewById(R.id.txt_nameRegisterUser);
+        txtEmailUserRegister = (EditText) getView().findViewById(R.id.txt_emailRegisterUser);
+        txtPasswordUserRegister = (EditText) getView().findViewById(R.id.txt_passwordRegisterUser);
 
-        String name, user, mail, password, age;
-        name = editTextName.getText().toString();
-        user = editTextUser.getText().toString();
-        mail = editTextMail.getText().toString();
-        age = editTextAge.getText().toString();
-        password = editTextPassword.getText().toString();
 
+        String nameUserRegister, emailUserRegister, passwordUserRegister;
+        nameUserRegister = txtNameUserRegister.getText().toString();
+        emailUserRegister = txtEmailUserRegister.getText().toString();
+        passwordUserRegister = txtPasswordUserRegister.getText().toString();
+
+        if (nameUserRegister.equals("")  ||
+                emailUserRegister.equals("") ||
+                passwordUserRegister.equals("")||
+                photo==null)
+        {
+            Toast.makeText(getContext(), "Falta Información", Toast.LENGTH_SHORT).show();
+
+        } else {
+            DbHelper dbHelper = new DbHelper(getContext());
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            String query1 = "SELECT " + RestaurantDB.ColumnUser.USER_NAME +
+                            " FROM " + RestaurantDB.TABLE_USER +
+                            " WHERE " + RestaurantDB.ColumnUser.USER_NAME + " = '" +
+                                        nameUserRegister + "'";
+
+            String query2 = "SELECT " + RestaurantDB.ColumnUser.USER_EMAIL +
+                            " FROM " + RestaurantDB.TABLE_USER +
+                            " WHERE " + RestaurantDB.ColumnUser.USER_EMAIL + " = '" +
+                                        emailUserRegister + "'";
+
+            Cursor c1 = db.rawQuery(query1, null);
+            Cursor c2 = db.rawQuery(query2,null);
+
+            if (c1.getCount()!=0||c2.getCount()!=0) {
+                if(c1.getCount()!=0&&c2.getCount()!=0){
+                    Toast.makeText(getContext(),"El correo y el nombre están en uso",Toast.LENGTH_SHORT).show();
+                }else{
+                    if(c1.getCount()!=0){
+                        Toast.makeText(getContext(),"El nombre de usuario ya está en uso",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getContext(),"El correo ya está en uso",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } else {
+
+                UserStructure user = new UserStructure(nameUserRegister,
+                                                       emailUserRegister,
+                                                       passwordUserRegister,
+                                                       "imagen");
+
+                db.insert(RestaurantDB.TABLE_USER,null,user.toContentValues());
+                Log.d("tabla usuario", "onClick: inserto usuario ");
+
+                //call startlogin fragment
+                Fragment frag = new StartLoginFragment();
+                getActivity().getSupportFragmentManager().popBackStack();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_loginContainer,frag).commit();
+            }
+
+        }
+
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

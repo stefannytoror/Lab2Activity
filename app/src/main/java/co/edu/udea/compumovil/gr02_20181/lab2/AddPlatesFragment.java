@@ -77,7 +77,7 @@ public class AddPlatesFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         //Organizar cuando se haga el layout
-        mTimeDisplay = (TextView) findViewByID);
+        //mTimeDisplay = (TextView) findViewByID);
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
@@ -141,7 +141,7 @@ public class AddPlatesFragment extends Fragment {
 
     }
 
-    public void onClick(View v) {
+  /*  public void onClick(View v) {
 
         switch (v.getId()) {
 
@@ -158,12 +158,12 @@ public class AddPlatesFragment extends Fragment {
 
         }
 
-    }
+    }*/
 
-    @Override
+   /* @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         mHour = hourOfDay;
         mMinute = minute;
         updateDisplay();
-    }
+    }*/
 }
