@@ -43,6 +43,7 @@
 
     //User
     <string name="hintContraseñaUsuario">Contraseña</string>
+    <string name="hintNombreUsuario">Nombre de usuario</string>
     <string name="btnIngresarUsuario">Ingresar</string>
     <string name="btnCrearCuentaUsuario">Crear cuenta</string>
     <string name="hintEmailRegistrarUsuario">ejemplo@gmail.com</string>

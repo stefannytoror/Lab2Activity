@@ -8,12 +8,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.DbHelper;
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.RestaurantDB;
 
 
 /**
@@ -36,7 +40,8 @@ public class StartLoginFragment extends Fragment implements View.OnClickListener
 
     private OnFragmentInteractionListener mListener;
 
-    private Button btnCreateAccount;
+    private Button btnCreateAccount, btnSignIn;
+    private String email;
 
     public StartLoginFragment() {
         // Required empty public constructor
@@ -74,6 +79,10 @@ public class StartLoginFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_start_login, container, false);
+
+        btnSignIn = (Button) view.findViewById(R.id.btn_SignIn);
+        btnSignIn.setOnClickListener(this);
+
         btnCreateAccount = view.findViewById(R.id.btn_createAccountUser);
         btnCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,5 +136,52 @@ public class StartLoginFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
+
+        EditText txtNameUser, txtPasswordUser;
+        String user = "", password = "";
+        txtNameUser = (EditText) getView().findViewById(R.id.txt_nameUser);
+        txtPasswordUser = (EditText) getView().findViewById(R.id.txt_passwordUser);
+
+        user = txtNameUser.getText().toString();
+        password = txtPasswordUser.getText().toString();
+
+        if (user.equals("") || password.equals("")) {
+            Toast.makeText(getContext(),"Información Incompleta",Toast.LENGTH_SHORT).show();
+
+        }else{
+            DbHelper dbHelper = new DbHelper(getContext());
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            Cursor c = db.rawQuery("SELECT "+ RestaurantDB.ColumnUser.USER_EMAIL +
+                    " FROM " + RestaurantDB.TABLE_USER +
+                    " WHERE "+ RestaurantDB.ColumnUser.USER_NAME + " = '"+ user +
+                    "' AND " + RestaurantDB.ColumnUser.USER_PASSWORD + " = '"+ password +"'", null);
+
+            if (c.moveToFirst()){
+                email = c.getString(0);
+                Log.d("DB", "onClick: login " + email);
+
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(RestaurantDB.ColumnUser.USER_STATE,"ACTIVO");
+                db.updateWithOnConflict(RestaurantDB.TABLE_USER,contentValues,
+                        RestaurantDB.ColumnUser.USER_NAME + "='" + user + "'",null,SQLiteDatabase.CONFLICT_IGNORE);
+                Intent other = new Intent(getActivity().getApplicationContext(), NDRestaurant.class);
+                Bundle bundleP = new Bundle();
+                onSaveInstanceState(bundleP);
+                other.putExtras(bundleP);
+                getActivity().finish();
+                startActivity(other);
+
+
+            }else {
+                Toast.makeText(getContext(),"Usuario o Contraseña Incorrecta No estas registrado? Crea una cuenta ",Toast.LENGTH_SHORT).show();
+            }
+            db.close();
+        }
+    }
+
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(RestaurantDB.ColumnUser.USER_EMAIL,email);
+
     }
 }
