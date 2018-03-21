@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 
 /**
@@ -17,7 +19,7 @@ import android.view.ViewGroup;
  * Use the {@link RegisterUserFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegisterUserFragment extends Fragment {
+public class RegisterUserFragment extends Fragment implements  View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -28,6 +30,8 @@ public class RegisterUserFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private String photo;
 
     public RegisterUserFragment() {
         // Required empty public constructor
@@ -64,7 +68,10 @@ public class RegisterUserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_register_user, container, false);
+        Button btnRegisterUser = (Button) view.findViewById(R.id.btn_registerUser);
+        btnRegisterUser.setOnClickListener(this);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,5 +111,22 @@ public class RegisterUserFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void onClick(View view){
+        EditText tctNameUserRegister, txtEmailUserRegister, txtPasswordUserRegister;
+        editTextName = (EditText) getView().findViewById(R.id.registrarNombre);
+        editTextUser = (EditText) getView().findViewById(R.id.registrarUsuario);
+        editTextMail = (EditText) getView().findViewById(R.id.registrarCorreo);
+        editTextAge = (EditText) getView().findViewById(R.id.registrarEdad);
+        editTextPassword = (EditText) getView().findViewById(R.id.registrarContraseña);
+
+        String name, user, mail, password, age;
+        name = editTextName.getText().toString();
+        user = editTextUser.getText().toString();
+        mail = editTextMail.getText().toString();
+        age = editTextAge.getText().toString();
+        password = editTextPassword.getText().toString();
+
     }
 }
