@@ -199,11 +199,11 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
             schedulePlateDB = scheduleNight.getText().toString();
         }
 
-        addPlate = (EditText) getView().findViewById(R.id.txtPrecioBebida);
-        priceDrinkDB = addDrink.getText().toString();
-
-        addDrink = (EditText) getView().findViewById(R.id.txtIngredientesBebida);
-        ingredientsDrinkDB = addDrink.getText().toString();
+//        addPlate = (EditText) getView().findViewById(R.id.txtPrecioBebida);
+//        priceDrinkDB = addDrink.getText().toString();
+//
+//        addDrink = (EditText) getView().findViewById(R.id.txtIngredientesBebida);
+//        ingredientsDrinkDB = addDrink.getText().toString();
     }
 
 }

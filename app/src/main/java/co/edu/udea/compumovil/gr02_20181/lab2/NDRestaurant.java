@@ -97,10 +97,10 @@ public class NDRestaurant extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.nav_plates) {
-            fragment = new AddPlatesFragment();
+            fragment = new PlatesFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.container,fragment,"platesFragment")
+                    .replace(R.id.container,fragment)
                     .commit();
 
         } else if (id == R.id.nav_drinks) {
