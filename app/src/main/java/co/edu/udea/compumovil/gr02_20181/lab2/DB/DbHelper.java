@@ -81,6 +81,17 @@ public class DbHelper  extends SQLiteOpenHelper {
                 + "UNIQUE (" + RestaurantDB.ColumnPlates.PLATE_NAME + "),"
                 + "PRIMARY KEY (" + RestaurantDB.ColumnPlates.PLATE_NAME + "))");
 
+        imageBitmap = BitmapFactory.decodeResource(cont.getResources(),R.drawable.future);
+        picture = encodeImage(imageBitmap);
+        PlatesStructure plate2 = new PlatesStructure("Arroz","Tarde",
+                "Entrada",20000,"00:45",
+                "Agua,sal al gusto, arroz",picture);
+        PlatesStructure plate1 = new PlatesStructure("Huevo","Mañana",
+                "Fuerte", 3000,"00:15","Huevo y agua caliente", picture);
+
+        db.insert(RestaurantDB.TABLE_PLATES, null, plate2.toContentValues());
+        db.insert(RestaurantDB.TABLE_PLATES, null, plate1.toContentValues());
+
 
     }
 

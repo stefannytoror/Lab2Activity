@@ -72,9 +72,10 @@ public class AdapterPlates  extends RecyclerView.Adapter<AdapterPlates.PlatesVie
             public void onClick(View v) {
                 Bundle b = new Bundle();
                 b.putString("namePlate",platesArray.get(position).getPlate_name());
+                b.putString("schedulePlate",platesArray.get(position).getPlate_schedule());
                 b.putString("typePlate",platesArray.get(position).getPlate_type());
-                b.putString("timePlate",platesArray.get(position).getPlate_time());
                 b.putInt("pricePlate",platesArray.get(position).getPlate_price());
+                b.putString("timePlate",platesArray.get(position).getPlate_time());
                 b.putString("ingredientsPlate",platesArray.get(position).getPlate_ingredients());
                 b.putString("picturePlate",platesArray.get(position).getPlate_picture());
                 listen.getPosition(b);
