@@ -35,6 +35,9 @@ public class NDRestaurant extends AppCompatActivity
 
     private static final int REQUEST_IMAGE_GALLERY = 31;
 
+    //false for plates true for Drinks
+    boolean plateOrDrink = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +51,7 @@ public class NDRestaurant extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -119,8 +123,14 @@ public class NDRestaurant extends AppCompatActivity
 
 
     public void photoGallery(View v) {
-
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+
+        switch (v.getId()) {
+
+            case R.id.btnAgregarImgBebida:
+                plateOrDrink= true;
+
+        }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
         } else {
@@ -134,10 +144,18 @@ public class NDRestaurant extends AppCompatActivity
         if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
             try {
-                Fragment fragment = new AddDrinksFragment();
+                //Fragment fragment = new AddDrinksFragment();
                 Bitmap selectedImage = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
-                ImageView drinkImage = (ImageView) findViewById(R.id.imgBebida) ;
-                drinkImage.setImageBitmap(selectedImage);
+
+                if(plateOrDrink==true){
+                    ImageView drinkImage = (ImageView) findViewById(R.id.imgBebida) ;
+                    drinkImage.setImageBitmap(selectedImage);
+                }
+                else {
+                    ImageView drinkImage = (ImageView) findViewById(R.id.imgPlato) ;
+                    drinkImage.setImageBitmap(selectedImage);
+                }
+
                 DbHelper db = new DbHelper(getApplicationContext());
                 //getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment,"drinkFragmentTag").addToBackStack(null).commit();
                 AddDrinksFragment frag = (AddDrinksFragment) getSupportFragmentManager().findFragmentByTag("drinkFragmentTag");

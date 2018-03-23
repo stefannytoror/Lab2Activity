@@ -69,6 +69,19 @@ public class DbHelper  extends SQLiteOpenHelper {
         db.insert(RestaurantDB.TABLE_DRINKS, null, drink1.toContentValues());
 
 
+        //Plates table
+        db.execSQL("CREATE TABLE " + RestaurantDB.TABLE_PLATES + " ("
+                + RestaurantDB.ColumnPlates.PLATE_NAME + " TEXT NOT NULL,"
+                + RestaurantDB.ColumnPlates.PLATE_SCHEDULE + " TEXT NOT NULL,"
+                + RestaurantDB.ColumnPlates.PLATE_TYPE + " TEXT NOT NULL,"
+                + RestaurantDB.ColumnPlates.PLATE_PRICE + " INT NOT NULL,"
+                + RestaurantDB.ColumnPlates.PLATE_TIME + " TEXT NOT NULL,"
+                + RestaurantDB.ColumnPlates.PLATE_INGREDIENTS + " TEXT NOT NULL,"
+                + RestaurantDB.ColumnPlates.PLATE_PICTURE + " TEXT,"
+                + "UNIQUE (" + RestaurantDB.ColumnPlates.PLATE_NAME + "),"
+                + "PRIMARY KEY (" + RestaurantDB.ColumnPlates.PLATE_NAME + "))");
+
+
     }
 
     @Override
@@ -109,6 +122,7 @@ public class DbHelper  extends SQLiteOpenHelper {
         cursor.close();
         return listDrinks;
     }
+
 
 
 }

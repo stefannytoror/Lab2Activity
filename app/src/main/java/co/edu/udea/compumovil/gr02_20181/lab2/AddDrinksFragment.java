@@ -146,7 +146,7 @@ public class AddDrinksFragment extends Fragment implements View.OnClickListener 
 
 
             if (photo == null) {
-                Toast.makeText(getContext(), "no coge la foto", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "no se pudo asignar foto", Toast.LENGTH_SHORT).show();
             }
 
             if (nameDrinkDB.equals("") || priceDrinkDB.equals("") || ingredientsDrinkDB.equals("") || photo == null) {

@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -43,6 +43,9 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    // photo
+    private String photo;
 
     //informacion del picker
     private TextView mTimeDisplay;
@@ -98,8 +101,11 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_plates, container, false);
+
         Button timePlate = (Button) view.findViewById(R.id.btnTiempoPlato);
         timePlate.setOnClickListener(this);
+        Button addDrinkButton = (Button) view.findViewById(R.id.btnAgregarPlato);
+        addDrinkButton.setOnClickListener(this);
         mTimeDisplay = (TextView)view.findViewById(R.id.txtTiempoPlato);
 
         updateDisplay();
@@ -131,16 +137,6 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -163,14 +159,33 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
 
     public void onClick(View v) {
 
+        switch (v.getId()) {
 
-        DialogFragment timePickerFragment = new TimePickerFragment();
+            case R.id.btnTiempoPlato:
+                DialogFragment timePickerFragment = new TimePickerFragment();
                 timePickerFragment.show(getFragmentManager(), "timePicker");
+                break;
+
+            case R.id.btnAgregarPlato:
+                break;
+
+        }
+    }
 
 
+    public void addPlate(){
+        EditText addDrink;
+        String namePlateDB, schedulePlateDB,tipePlateDB, pricePlateDB, ingredientsDrinkDB;
+
+        /*addDrink = (EditText) getView().findViewById(R.id.txtNombreBebida);
+        nameDrinkDB = addDrink.getText().toString();
 
 
+        addDrink = (EditText) getView().findViewById(R.id.txtPrecioBebida);
+        priceDrinkDB = addDrink.getText().toString();
 
+        addDrink = (EditText) getView().findViewById(R.id.txtIngredientesBebida);
+        ingredientsDrinkDB = addDrink.getText().toString()*/;
     }
 
 }

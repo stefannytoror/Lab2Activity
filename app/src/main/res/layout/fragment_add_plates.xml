@@ -35,7 +35,8 @@
             android:layout_gravity="center"
             android:drawableBottom="@drawable/ic_menu_camera"
             tools:layout_editor_absoluteX="147dp"
-            tools:layout_editor_absoluteY="60dp" />
+            tools:layout_editor_absoluteY="60dp"
+            android:onClick="photoGallery"/>
 
     </LinearLayout>
 
