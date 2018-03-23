@@ -2,6 +2,7 @@ package co.edu.udea.compumovil.gr02_20181.lab2;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -12,17 +13,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
 
 import javax.microedition.khronos.opengles.GL;
 
-
-
-
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.DbHelper;
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.PlatesStructure;
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.RestaurantDB;
 
 
 /**
@@ -103,11 +106,14 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_plates, container, false);
 
-        Button timePlate = (Button) view.findViewById(R.id.btnTiempoPlato);
-        timePlate.setOnClickListener(this);
-        Button addDrinkButton = (Button) view.findViewById(R.id.btnAgregarPlato);
-        addDrinkButton.setOnClickListener(this);
+        Button btntimePlate = (Button) view.findViewById(R.id.btnTiempoPlato);
+        btntimePlate.setOnClickListener(this);
+
+        Button btnaddPlateButton = (Button) view.findViewById(R.id.btnAgregarPlato);
+        btnaddPlateButton.setOnClickListener(this);
+
         mTimeDisplay = (TextView)view.findViewById(R.id.txtTiempoPlato);
+
 
         updateDisplay();
         return view;
@@ -168,16 +174,20 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
                 break;
 
             case R.id.btnAgregarPlato:
+                addPlate();
                 break;
 
         }
     }
 
+    public void setPhoto(String photo){this.photo = photo;}
 
     public void addPlate(){
         EditText addPlate;
-        String namePlateDB, schedulePlateDB,tipePlateDB, pricePlateDB,timePlateDB, ingredientsDrinkDB;
+        TextView addtimePlate;
+        String namePlateDB, schedulePlateDB,typePlateDB, pricePlateDB,timePlateDB, ingredientsPlateDB;
         CheckBox scheduleMorning , scheduleAfternoon, scheduleNight;
+        RadioButton typePlateE ,typePlateS;
 
         addPlate = (EditText) getView().findViewById(R.id.txtNombrePlato);
         namePlateDB = addPlate.getText().toString();
@@ -186,6 +196,9 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
         scheduleAfternoon = (CheckBox)getView().findViewById(R.id.checkBoxTarde);
         scheduleNight = (CheckBox)getView().findViewById(R.id.checkBoxNoche);
 
+
+        // checkbox
+        schedulePlateDB= "";
         if (scheduleMorning.isChecked()) {
 
             schedulePlateDB = scheduleMorning.getText().toString();
@@ -199,11 +212,65 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
             schedulePlateDB = scheduleNight.getText().toString();
         }
 
-//        addPlate = (EditText) getView().findViewById(R.id.txtPrecioBebida);
-//        priceDrinkDB = addDrink.getText().toString();
-//
-//        addDrink = (EditText) getView().findViewById(R.id.txtIngredientesBebida);
-//        ingredientsDrinkDB = addDrink.getText().toString();
+        //radiobutton
+        typePlateDB = "";
+        typePlateE = getView().findViewById(R.id.radioBtnEntrada);
+        typePlateS = getView().findViewById(R.id.radioBtnPlatoFuerte);
+
+        if(typePlateE.isChecked()){
+            typePlateDB = typePlateE.getText().toString();
+        }
+        else if(typePlateS.isChecked()){
+            typePlateDB = typePlateS.getText().toString();
+        }
+
+
+        //price
+        addPlate = (EditText) getView().findViewById(R.id.txtPrecioPlato);
+        pricePlateDB = addPlate.getText().toString();
+
+
+        addtimePlate = (TextView) getView().findViewById(R.id.txtTiempoPlato);
+        timePlateDB = addtimePlate.getText().toString();
+
+        addPlate = (EditText) getView().findViewById(R.id.txtIngredientes);
+        ingredientsPlateDB = addPlate.getText().toString();
+
+       /* if (photo == null) {
+            Toast.makeText(getContext(), "no se pudo asignar foto", Toast.LENGTH_SHORT).show();
+        }*/
+
+        if (namePlateDB.equals("") || !scheduleMorning.isChecked() &&
+                !scheduleAfternoon.isChecked() &&
+                !scheduleNight.isChecked() ||
+                typePlateE.isChecked() &&
+                typePlateS.isChecked() ||
+                pricePlateDB.equals("") || timePlateDB.equals("") ||
+                ingredientsPlateDB.equals("") || photo == null) {
+            Toast.makeText(getContext(), "Información Incompleta", Toast.LENGTH_SHORT).show();
+        } else {
+
+            int pricePlateDb = Integer.parseInt(pricePlateDB);
+
+            DbHelper dbHelper = new DbHelper(getContext());
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            PlatesStructure plate_structure = new PlatesStructure(namePlateDB,
+                                                                  schedulePlateDB,
+                                                                  typePlateDB,
+                                                                  pricePlateDb,
+                                                                  timePlateDB,
+                                                                  ingredientsPlateDB,
+                                                                  photo);
+
+            //insert in  DB
+            db.insert(RestaurantDB.TABLE_PLATES, null, plate_structure.toContentValues());
+
+            Fragment platesf = new PlatesFragment();
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction().replace(R.id.container, platesf).commit();
+        }
+
+
     }
 
 }

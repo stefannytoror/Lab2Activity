@@ -37,7 +37,7 @@ public class TimePickerFragment extends DialogFragment implements
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-        ((TimePickerDialog.OnTimeSetListener)getFragmentManager().findFragmentByTag("platesFragment")).onTimeSet(view, hourOfDay, minute);
+        ((TimePickerDialog.OnTimeSetListener)getFragmentManager().findFragmentByTag("platesFragmentTag")).onTimeSet(view, hourOfDay, minute);
     }
 
 }
