@@ -1,5 +1,6 @@
 package co.edu.udea.compumovil.gr02_20181.lab2;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,11 +9,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
+
+
+import javax.microedition.khronos.opengles.GL;
+
 
 
 
@@ -26,7 +32,7 @@ import java.util.Calendar;
  * Use the {@link AddPlatesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddPlatesFragment extends Fragment {
+public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTimeSetListener, View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -77,7 +83,7 @@ public class AddPlatesFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         //Organizar cuando se haga el layout
-        //mTimeDisplay = (TextView) findViewByID);
+
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
@@ -85,14 +91,20 @@ public class AddPlatesFragment extends Fragment {
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
 
-        updateDisplay();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_plates, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_plates, container, false);
+        Button timePlate = (Button) view.findViewById(R.id.btnTiempoPlato);
+        timePlate.setOnClickListener(this);
+        mTimeDisplay = (TextView)view.findViewById(R.id.txtTiempoPlato);
+
+        updateDisplay();
+        return view;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -141,29 +153,24 @@ public class AddPlatesFragment extends Fragment {
 
     }
 
-  /*  public void onClick(View v) {
 
-        switch (v.getId()) {
-
-            case R.id.btnTiempoPlato:
-                DialogFragment timePickerFragment = new TimePickerFragment();
-                timePickerFragment.show(getFragmentManager(), "timePicker");
-                break;
-
-            case R.id.btnAgregarPlato:
-                RelativeLayout relativeLayoutInfo = (RelativeLayout)findViewById(R.id.relativeLayoutInfoPlato);
-                relativeLayoutInfo.setVisibility(View.VISIBLE);
-
-                break;
-
-        }
-
-    }*/
-
-   /* @Override
+    @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         mHour = hourOfDay;
         mMinute = minute;
         updateDisplay();
-    }*/
+    }
+
+    public void onClick(View v) {
+
+
+        DialogFragment timePickerFragment = new TimePickerFragment();
+                timePickerFragment.show(getFragmentManager(), "timePicker");
+
+
+
+
+
+    }
+
 }
