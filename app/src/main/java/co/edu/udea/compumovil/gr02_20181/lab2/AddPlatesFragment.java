@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -174,18 +175,35 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
 
 
     public void addPlate(){
-        EditText addDrink;
-        String namePlateDB, schedulePlateDB,tipePlateDB, pricePlateDB, ingredientsDrinkDB;
+        EditText addPlate;
+        String namePlateDB, schedulePlateDB,tipePlateDB, pricePlateDB,timePlateDB, ingredientsDrinkDB;
+        CheckBox scheduleMorning , scheduleAfternoon, scheduleNight;
 
-        /*addDrink = (EditText) getView().findViewById(R.id.txtNombreBebida);
-        nameDrinkDB = addDrink.getText().toString();
+        addPlate = (EditText) getView().findViewById(R.id.txtNombrePlato);
+        namePlateDB = addPlate.getText().toString();
 
+        scheduleMorning = (CheckBox)getView().findViewById(R.id.checkBoxManana);
+        scheduleAfternoon = (CheckBox)getView().findViewById(R.id.checkBoxTarde);
+        scheduleNight = (CheckBox)getView().findViewById(R.id.checkBoxNoche);
 
-        addDrink = (EditText) getView().findViewById(R.id.txtPrecioBebida);
+        if (scheduleMorning.isChecked()) {
+
+            schedulePlateDB = scheduleMorning.getText().toString();
+        }
+        if (scheduleAfternoon.isChecked()) {
+
+            schedulePlateDB =scheduleAfternoon.getText().toString();
+        }
+        if (scheduleNight.isChecked()) {
+
+            schedulePlateDB = scheduleNight.getText().toString();
+        }
+
+        addPlate = (EditText) getView().findViewById(R.id.txtPrecioBebida);
         priceDrinkDB = addDrink.getText().toString();
 
         addDrink = (EditText) getView().findViewById(R.id.txtIngredientesBebida);
-        ingredientsDrinkDB = addDrink.getText().toString()*/;
+        ingredientsDrinkDB = addDrink.getText().toString();
     }
 
 }
