@@ -130,6 +130,9 @@ public class NDRestaurant extends AppCompatActivity
             case R.id.btnAgregarImgBebida:
                 plateOrDrink= true;
                 break;
+            case R.id.btnAgregarImagen:
+                plateOrDrink= false;
+                break;
 
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -147,26 +150,31 @@ public class NDRestaurant extends AppCompatActivity
             try {
                 //Fragment fragment = new AddDrinksFragment();
                 Bitmap selectedImage = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
-                DbHelper db = new DbHelper(getApplicationContext());
-                if(plateOrDrink==true){
+
+                if(plateOrDrink){
                     ImageView drinkImage = (ImageView) findViewById(R.id.imgBebida) ;
                     drinkImage.setImageBitmap(selectedImage);
                     AddDrinksFragment frag = (AddDrinksFragment) getSupportFragmentManager().findFragmentByTag("drinkFragmentTag");
                     if (frag != null) {
                         String TAG = "que";
                         Log.d(TAG, "onActivityResult: guardo la imagen de bebida");
+                        DbHelper db = new DbHelper(getApplicationContext());
                         frag.setPhoto(db.encodeImage(selectedImage));
 
                     }
                 }
-                else {
-                    ImageView drinkImage = (ImageView) findViewById(R.id.imgPlato) ;
-                    drinkImage.setImageBitmap(selectedImage);
-                    AddPlatesFragment frag = (AddPlatesFragment) getSupportFragmentManager().findFragmentByTag("plateFragmentTag");
-
+                if(!plateOrDrink)
+                {
+                    Log.d("que", "onActivityResult: entro al else");
+                    ImageView plateImage = (ImageView) findViewById(R.id.imgPlato) ;
+                    plateImage.setImageBitmap(selectedImage);
+                    AddPlatesFragment frag = (AddPlatesFragment) getSupportFragmentManager().
+                            findFragmentByTag("platesFragmentTag");
+                    Log.d("que", " imagen de plato");
                     if (frag != null) {
                         String TAG = "que";
                         Log.d(TAG, "onActivityResult: guardo la imagen de plato");
+                        DbHelper db = new DbHelper(getApplicationContext());
                         frag.setPhoto(db.encodeImage(selectedImage));
 
                     }

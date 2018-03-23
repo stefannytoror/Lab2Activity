@@ -236,9 +236,9 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
         addPlate = (EditText) getView().findViewById(R.id.txtIngredientes);
         ingredientsPlateDB = addPlate.getText().toString();
 
-       /* if (photo == null) {
+        if (photo == null) {
             Toast.makeText(getContext(), "no se pudo asignar foto", Toast.LENGTH_SHORT).show();
-        }*/
+        }
 
         if (namePlateDB.equals("") || !scheduleMorning.isChecked() &&
                 !scheduleAfternoon.isChecked() &&
