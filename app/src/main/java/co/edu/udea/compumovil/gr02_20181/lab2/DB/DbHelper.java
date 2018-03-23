@@ -123,6 +123,32 @@ public class DbHelper  extends SQLiteOpenHelper {
         return listDrinks;
     }
 
+    public List<PlatesStructure> platesList() {
+        SQLiteDatabase db = getReadableDatabase();
+        List<PlatesStructure> listPlates = new ArrayList<PlatesStructure>();
+        String[] columns = {
+                RestaurantDB.ColumnPlates.PLATE_NAME,
+                RestaurantDB.ColumnPlates.PLATE_SCHEDULE,
+                RestaurantDB.ColumnPlates.PLATE_TYPE,
+                RestaurantDB.ColumnPlates.PLATE_PRICE,
+                RestaurantDB.ColumnPlates.PLATE_TIME,
+                RestaurantDB.ColumnPlates.PLATE_INGREDIENTS,
+                RestaurantDB.ColumnPlates.PLATE_PICTURE};
+        Cursor cursor = db.query(RestaurantDB.TABLE_PLATES, columns, null, null,
+                null, null, null, null);
+        cursor.moveToFirst();
+        do {
+            PlatesStructure drinkObtain = new PlatesStructure(
+                    cursor.getString(0),cursor.getString(1),cursor.getString(2),
+                    cursor.getInt(3),cursor.getString(4), cursor.getString(5),
+                    cursor.getString(6));
+            listPlates.add(drinkObtain);
+        } while (cursor.moveToNext());
+        db.close();
+        cursor.close();
+        return listPlates;
+    }
+
 
 
 }

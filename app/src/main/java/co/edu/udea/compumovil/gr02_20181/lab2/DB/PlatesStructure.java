@@ -23,13 +23,13 @@ public class PlatesStructure {
 
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
-        values.put(RestaurantDB.ColumnDrinks.PLATE_NAME, plate_name);
-        values.put(RestaurantDB.ColumnDrinks.PLATE_SCHEDULE, plate_schedule);
-        values.put(RestaurantDB.ColumnDrinks.PLATE_TYPE, plate_type);
-        values.put(RestaurantDB.ColumnDrinks.PLATE_PRICE, plate_price);
-        values.put(RestaurantDB.ColumnDrinks.PLATE_TIME, plate_time);
-        values.put(RestaurantDB.ColumnDrinks.PLATE_INGREDIENTS, plate_ingredients);
-        values.put(RestaurantDB.ColumnDrinks.PLATE_PICTURE, plate_picture);
+        values.put(RestaurantDB.ColumnPlates.PLATE_NAME, plate_name);
+        values.put(RestaurantDB.ColumnPlates.PLATE_SCHEDULE, plate_schedule);
+        values.put(RestaurantDB.ColumnPlates.PLATE_TYPE, plate_type);
+        values.put(RestaurantDB.ColumnPlates.PLATE_PRICE, plate_price);
+        values.put(RestaurantDB.ColumnPlates.PLATE_TIME, plate_time);
+        values.put(RestaurantDB.ColumnPlates.PLATE_INGREDIENTS, plate_ingredients);
+        values.put(RestaurantDB.ColumnPlates.PLATE_PICTURE, plate_picture);
         return values;
     }
 

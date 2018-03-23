@@ -16,6 +16,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.PlatesStructure;
 
 
 public class AdapterPlates  extends RecyclerView.Adapter<AdapterPlates.PlatesViewH> /*implements Filterable*/{
@@ -84,8 +85,8 @@ public class AdapterPlates  extends RecyclerView.Adapter<AdapterPlates.PlatesVie
     public int getItemCount() {
 
 
-        Log.d("hola","numero de items" + PlatesArray.size());
-        return PlatesArray.size();
+        Log.d("hola","numero de items" + platesArray.size());
+        return platesArray.size();
     }
 
     public class PlatesViewH extends RecyclerView.ViewHolder {
