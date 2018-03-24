@@ -21,13 +21,13 @@ import co.edu.udea.compumovil.gr02_20181.lab2.DB.PlatesStructure;
 
 public class AdapterPlates  extends RecyclerView.Adapter<AdapterPlates.PlatesViewH> /*implements Filterable*/{
 
-    co.edu.udea.compumovil.gr02_20181.lab2.AdapterDrinks.OnListener listen;
+    OnListener listen;
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         try{
-            listen = (co.edu.udea.compumovil.gr02_20181.lab2.AdapterDrinks.OnListener)recyclerView.getContext();
+            listen = (OnListener)recyclerView.getContext();
         }catch (Exception e){
 
         }
@@ -55,6 +55,7 @@ public class AdapterPlates  extends RecyclerView.Adapter<AdapterPlates.PlatesVie
 
         int price = platesArray.get(position).getPlate_price();
         holder.pricePlate.setText(String.valueOf(price));
+        Log.d("tag", "onBindViewHolder: " + String.valueOf(price));
 
         holder.typePlate.setText(platesArray.get(position).getPlate_type());
         holder.timePlate.setText(platesArray.get(position).getPlate_time());
@@ -78,7 +79,7 @@ public class AdapterPlates  extends RecyclerView.Adapter<AdapterPlates.PlatesVie
                 b.putString("timePlate",platesArray.get(position).getPlate_time());
                 b.putString("ingredientsPlate",platesArray.get(position).getPlate_ingredients());
                 b.putString("picturePlate",platesArray.get(position).getPlate_picture());
-                listen.getPosition(b);
+                listen.getPositionPlates(b);
             }
         });
     }
@@ -107,7 +108,7 @@ public class AdapterPlates  extends RecyclerView.Adapter<AdapterPlates.PlatesVie
         }
     }
     public interface OnListener{
-        public void getPosition(Bundle datos);
+        public void getPositionPlates(Bundle datos);
     }
 
 }

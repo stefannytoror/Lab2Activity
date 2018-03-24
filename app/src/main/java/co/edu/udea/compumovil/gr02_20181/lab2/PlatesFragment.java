@@ -34,7 +34,7 @@ public class PlatesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     public RecyclerView recyclerView = null;
-    public AdapterDrinks adapterDrinks;
+    public AdapterPlates adapterPlates;
 
 
     private OnFragmentInteractionListener mListener;
@@ -81,7 +81,7 @@ public class PlatesFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         DbHelper db = new DbHelper(getContext());
         List<PlatesStructure> plates = db.platesList();
-        AdapterPlates adapterPlates= new AdapterPlates(plates);
+        adapterPlates= new AdapterPlates(plates);
         recyclerView.setAdapter(adapterPlates);
         return view;
     }

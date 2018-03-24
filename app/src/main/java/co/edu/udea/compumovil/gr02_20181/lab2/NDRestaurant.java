@@ -31,7 +31,9 @@ import java.io.IOException;
 import co.edu.udea.compumovil.gr02_20181.lab2.DB.DbHelper;
 
 public class NDRestaurant extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, AdapterDrinks.OnListener  {
+        implements NavigationView.OnNavigationItemSelectedListener,
+                                    AdapterDrinks.OnListener ,
+                                    AdapterPlates.OnListener {
 
     private static final int REQUEST_IMAGE_GALLERY = 31;
 
@@ -194,6 +196,13 @@ public class NDRestaurant extends AppCompatActivity
     public void getPosition(Bundle datos) {
         Fragment frag = new ShowCompleteInfoDrink();
         frag.setArguments(datos);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void getPositionPlates(Bundle datosPlatos) {
+        Fragment frag = new ShowCompleteInfoPlate();
+        frag.setArguments(datosPlatos);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).addToBackStack(null).commit();
     }
 
