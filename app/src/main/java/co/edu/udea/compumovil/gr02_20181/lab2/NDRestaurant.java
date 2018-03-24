@@ -141,6 +141,15 @@ public class NDRestaurant extends AppCompatActivity
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
         } else {
             photoPickerIntent.setType("image/*");
+            //crop
+            photoPickerIntent.putExtra("crop","true");
+            photoPickerIntent.putExtra("outputX",200);
+            photoPickerIntent.putExtra("outputY",200);
+            photoPickerIntent.putExtra("aspectX",1);
+            photoPickerIntent.putExtra("aspectY",1);
+            photoPickerIntent.putExtra("scale",true);
+            photoPickerIntent.putExtra("outputFormat",Bitmap.CompressFormat.JPEG.toString());
+
             startActivityForResult(photoPickerIntent, REQUEST_IMAGE_GALLERY);
         }
     }
@@ -149,9 +158,11 @@ public class NDRestaurant extends AppCompatActivity
 
         if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
+            Bundle b = data.getExtras();
             try {
                 //Fragment fragment = new AddDrinksFragment();
                 Bitmap selectedImage = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
+                Bitmap selectedImagec = b.getParcelable("data");
 
                 if(plateOrDrink){
                     ImageView drinkImage = (ImageView) findViewById(R.id.imgBebida) ;

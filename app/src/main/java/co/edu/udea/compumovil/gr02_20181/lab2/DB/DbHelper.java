@@ -102,7 +102,7 @@ public class DbHelper  extends SQLiteOpenHelper {
 
     public String encodeImage(Bitmap bit) {
         ByteArrayOutputStream temp = new ByteArrayOutputStream();
-        bit.compress(Bitmap.CompressFormat.PNG, 0, temp);
+        bit.compress(Bitmap.CompressFormat.PNG, 100, temp);
         byte[] p = temp.toByteArray();
         return (Base64.encodeToString(p, Base64.DEFAULT));
     }
