@@ -52,5 +52,8 @@
     <string name="hintEmailRegistrarUsuario">ejemplo@gmail.com</string>
     <string name="btnRegistrarUsuario">Registrate</string>
 
+    //Profile
+    <string name="titleProfile">Mi Perfil</string>
+
 
 </resources>

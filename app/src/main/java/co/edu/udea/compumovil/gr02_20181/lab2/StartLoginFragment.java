@@ -157,6 +157,7 @@ public class StartLoginFragment extends Fragment implements View.OnClickListener
                     "' AND " + RestaurantDB.ColumnUser.USER_PASSWORD + " = '"+ password +"'", null);
 
             if (c.moveToFirst()){
+                // save email for use to savedInstance
                 email = c.getString(0);
                 Log.d("DB", "onClick: login " + email);
 
