@@ -3,6 +3,7 @@ package co.edu.udea.compumovil.gr02_20181.lab2;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -23,6 +25,8 @@ public class ShowCompleteInfoPlate extends Fragment {
         // Required empty public constructor
     }
 
+    boolean favorite = false;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,6 +36,23 @@ public class ShowCompleteInfoPlate extends Fragment {
 
         TextView t;
         ImageView i;
+
+        final FloatingActionButton fb = (FloatingActionButton) view.findViewById(R.id.addFavortires);
+        fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+
+                if(favorite){
+                    Toast.makeText(getContext(),"Eliminado de favoritos", Toast.LENGTH_SHORT).show();
+                    fb.setImageResource(R.drawable.ic_star_border_black_24dp);
+                    favorite = false;
+                }else{
+                    Toast.makeText(getContext(),"Agregado a favoritos", Toast.LENGTH_SHORT).show();
+                    fb.setImageResource(R.drawable.ic_star_black_24dp);
+                    favorite = true;
+                }
+            }
+        });
 
         i = (ImageView)view.findViewById(R.id.imgPlateComplete);
         byte[] photo = Base64.decode(getArguments().getString("picturePlate"),Base64.DEFAULT);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -32,6 +34,8 @@ public class ShowCompleteInfoDrink extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    boolean favorite = false;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -73,6 +77,23 @@ public class ShowCompleteInfoDrink extends Fragment {
         View view = inflater.inflate(R.layout.fragment_show_complete_info_drink, container, false);
         TextView t;
         ImageView i;
+        final FloatingActionButton fb = (FloatingActionButton) view.findViewById(R.id.addFavortires);
+        fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+
+                if(favorite){
+                    Toast.makeText(getContext(),"Eliminado de favoritos", Toast.LENGTH_SHORT).show();
+                    fb.setImageResource(R.drawable.ic_star_border_black_24dp);
+                    favorite = false;
+                }else{
+                    Toast.makeText(getContext(),"Agregado a favoritos", Toast.LENGTH_SHORT).show();
+                    fb.setImageResource(R.drawable.ic_star_black_24dp);
+                    favorite = true;
+                }
+            }
+        });
+
 
         i = (ImageView)view.findViewById(R.id.imgDrinkComplete);
         byte[] photo = Base64.decode(getArguments().getString("pictureDrinks"),Base64.DEFAULT);
@@ -118,4 +139,6 @@ public class ShowCompleteInfoDrink extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }
