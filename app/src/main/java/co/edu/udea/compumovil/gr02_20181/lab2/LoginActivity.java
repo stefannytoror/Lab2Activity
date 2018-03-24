@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                     String TAG = "que";
                     Log.d(TAG, "onActivityResult: guardo la imagen");
                     frag.setPhoto(db.encodeImage(selectedImage));
+
                 }
             } catch (IOException e) {
             }

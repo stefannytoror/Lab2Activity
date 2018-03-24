@@ -171,7 +171,7 @@ public class RegisterUserFragment extends Fragment implements  View.OnClickListe
                 UserStructure user = new UserStructure(nameUserRegister,
                                                        emailUserRegister,
                                                        passwordUserRegister,
-                                                       "imagen");
+                                                       photo);
 
                 db.insert(RestaurantDB.TABLE_USER,null,user.toContentValues());
                 Log.d("tabla usuario", "onClick: inserto usuario ");
