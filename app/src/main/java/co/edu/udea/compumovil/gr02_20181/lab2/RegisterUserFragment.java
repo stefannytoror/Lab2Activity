@@ -76,7 +76,9 @@ public class RegisterUserFragment extends Fragment implements  View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_register_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_register_user,
+                container, false);
+        ((LoginActivity)getActivity()).setActionBarTitle("Registro");
         Button btnRegisterUser = (Button) view.findViewById(R.id.btn_registerUser);
         btnRegisterUser.setOnClickListener(this);
         return view;

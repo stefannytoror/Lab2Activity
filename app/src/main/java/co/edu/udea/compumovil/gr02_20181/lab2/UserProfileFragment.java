@@ -41,7 +41,10 @@ public class UserProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_profile,
+                container, false);
+        ((NDRestaurant)getActivity()).setActionBarTitle("Perfil");
+
 
         TextView nameUserProfile , emailUserProfile;
         ImageView imgUserProfile;

@@ -33,10 +33,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:backgroundTint="@color/colorAccent"
             android:drawableBottom="@drawable/ic_menu_camera"
+            android:onClick="photoGallery"
             tools:layout_editor_absoluteX="147dp"
-            tools:layout_editor_absoluteY="60dp"
-            android:onClick="photoGallery"/>
+            tools:layout_editor_absoluteY="60dp" />
 
     </LinearLayout>
 
@@ -145,6 +146,7 @@
                 android:layout_width="59dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
+                android:backgroundTint="@color/colorAccent"
                 android:drawableBottom="@android:drawable/ic_lock_idle_alarm"
                 android:onClick="onClick" />
 
@@ -172,13 +174,15 @@
                 android:ems="13"
                 android:hint="@string/hintIngredientes"
                 android:inputType="textPersonName" />
+
             <Button
                 android:id="@+id/btnAgregarPlato"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/btnAgregarPlato"
-                android:onClick="onClick"/>
+                android:backgroundTint="@color/colorAccent"
+                android:onClick="onClick"
+                android:text="@string/btnAgregarPlato" />
         </LinearLayout>
 
         <LinearLayout

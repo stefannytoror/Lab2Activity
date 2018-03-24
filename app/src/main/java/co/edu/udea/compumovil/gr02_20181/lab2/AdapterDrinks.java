@@ -139,6 +139,8 @@ public class AdapterDrinks  extends RecyclerView.Adapter<AdapterDrinks.DrinksVie
                 for (final DrinksStructure drink : drinks) {
                     if (drink.getDrink_name().toLowerCase().trim().contains(filterPattern)) {
                         drinksArray.add(drink);
+                    }else if(String.valueOf(drink.getDrink_price()).trim().contains(filterPattern)){
+                        drinksArray.add(drink);
                     }
                 }
             }

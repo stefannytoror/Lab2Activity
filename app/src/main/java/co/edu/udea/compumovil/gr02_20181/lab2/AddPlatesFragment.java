@@ -104,7 +104,9 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_plates, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_plates,
+                container, false);
+        ((NDRestaurant)getActivity()).setActionBarTitle("Agregar Plato");
 
         Button btntimePlate = (Button) view.findViewById(R.id.btnTiempoPlato);
         btntimePlate.setOnClickListener(this);

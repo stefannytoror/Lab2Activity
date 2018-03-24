@@ -78,7 +78,10 @@ public class StartLoginFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_start_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_start_login,
+                container, false);
+        ((LoginActivity)getActivity()).setActionBarTitle("Iniciar sesión");
+
 
         btnSignIn = (Button) view.findViewById(R.id.btn_SignIn);
         btnSignIn.setOnClickListener(this);

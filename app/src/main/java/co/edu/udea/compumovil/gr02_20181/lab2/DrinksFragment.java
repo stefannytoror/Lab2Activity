@@ -7,10 +7,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
+import android.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView.OnQueryTextListener;
 
 import java.util.List;
 
@@ -77,6 +78,7 @@ public class DrinksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        ((NDRestaurant)getActivity()).setActionBarTitle("Bebidas");
         View view = inflater.inflate(R.layout.fragment_drinks, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_drinks);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -86,7 +88,7 @@ public class DrinksFragment extends Fragment {
         adapterDrinks = new AdapterDrinks(drinks);
         recyclerView.setAdapter(adapterDrinks);
 
-        searchView = (SearchView) getActivity().findViewById(R.id.buscar);
+        searchView = (SearchView) getActivity().findViewById(R.id.search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

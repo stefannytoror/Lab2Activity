@@ -12,8 +12,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.SearchView;
+import android.widget.SearchView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -44,6 +45,8 @@ public class NDRestaurant extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ndrestaurant);
+        SearchView search = (SearchView) findViewById(R.id.search);
+        search.setLayoutParams(new Toolbar.LayoutParams(Gravity.RIGHT));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -57,6 +60,8 @@ public class NDRestaurant extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @Override
@@ -99,6 +104,9 @@ public class NDRestaurant extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.nav_plates) {
+            SearchView search = (SearchView) findViewById(R.id.search);
+            search.setVisibility(View.VISIBLE);
+
             fragment = new PlatesFragment();
             getSupportFragmentManager()
                     .beginTransaction()
@@ -106,14 +114,17 @@ public class NDRestaurant extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.nav_drinks) {
-
-                fragment = new DrinksFragment();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container,fragment)
-                        .commit();
+            SearchView search = (SearchView) findViewById(R.id.search);
+            search.setVisibility(View.VISIBLE);
+            fragment = new DrinksFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container,fragment)
+                    .commit();
 
         } else if (id == R.id.nav_profile) {
+            SearchView search = (SearchView) findViewById(R.id.search);
+            search.setVisibility(View.INVISIBLE);
             fragment = new UserProfileFragment();
             getSupportFragmentManager()
                     .beginTransaction()
@@ -238,5 +249,9 @@ public class NDRestaurant extends AppCompatActivity
                 .replace(R.id.container,fragment,"platesFragmentTag")
                 .addToBackStack(null).commit();
 
+    }
+
+    public void setActionBarTitle(String title){
+        getSupportActionBar().setTitle(title);
     }
 }

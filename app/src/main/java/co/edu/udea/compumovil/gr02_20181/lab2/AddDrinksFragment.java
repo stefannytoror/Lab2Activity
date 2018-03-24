@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,9 +77,12 @@ public class AddDrinksFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View viewDrinks = inflater.inflate(R.layout.fragment_add_drinks, container, false);
+        View viewDrinks = inflater.inflate(R.layout.fragment_add_drinks,
+                container, false);
+        ((NDRestaurant)getActivity()).setActionBarTitle("Agregar Bebida");
         Button addDrinkButton = (Button) viewDrinks.findViewById(R.id.btnAgregarBebida);
         addDrinkButton.setOnClickListener(this);
+
 
         // Inflate the layout for this fragment
         return viewDrinks;

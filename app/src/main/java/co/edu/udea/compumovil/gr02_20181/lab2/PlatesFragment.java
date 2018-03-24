@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
+import android.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +77,9 @@ public class PlatesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_plates, container, false);
+        View view = inflater.inflate(R.layout.fragment_plates,
+                container, false);
+        ((NDRestaurant)getActivity()).setActionBarTitle("Platos");
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_plates);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -86,7 +88,7 @@ public class PlatesFragment extends Fragment {
         adapterPlates= new AdapterPlates(plates);
         recyclerView.setAdapter(adapterPlates);
 
-        searchView = (SearchView) getActivity().findViewById(R.id.buscar);
+        searchView = (SearchView) getActivity().findViewById(R.id.search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

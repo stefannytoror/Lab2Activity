@@ -146,6 +146,8 @@ public class AdapterPlates  extends RecyclerView.Adapter<AdapterPlates.PlatesVie
                 for (final PlatesStructure plate : plates) {
                     if (plate.getPlate_name().toLowerCase().trim().contains(filterPattern)) {
                         platesArray.add(plate);
+                    }if(String.valueOf(plate.getPlate_price()).trim().contains(filterPattern)){
+                        platesArray.add(plate);
                     }
                 }
             }

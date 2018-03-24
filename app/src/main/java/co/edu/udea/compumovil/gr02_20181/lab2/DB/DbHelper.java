@@ -39,10 +39,10 @@ public class DbHelper  extends SQLiteOpenHelper {
                 + "PRIMARY KEY (" + RestaurantDB.ColumnUser.USER_EMAIL + "))");
 
 
-        /*Bitmap user_picture = BitmapFactory.decodeResource(cont.getResources(), R.drawable.cali);
+        Bitmap user_picture = BitmapFactory.decodeResource(cont.getResources(), R.drawable.future);
 
-        String user_pictureString = encodeImage(user_picture);*/
-        UserStructure user = new UserStructure("Santi ago", "santi@gmail.com", "1", "aqui va a imagen");
+        String user_pictureString = encodeImage(user_picture);
+        UserStructure user = new UserStructure("a", "a@gmail.com", "a", user_pictureString);
         db.insert(RestaurantDB.TABLE_USER, null, user.toContentValues());
 
 
