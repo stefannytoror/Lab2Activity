@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class PlatesFragment extends Fragment {
     private String mParam2;
     public RecyclerView recyclerView = null;
     public AdapterPlates adapterPlates;
+    public SearchView searchView;
 
 
     private OnFragmentInteractionListener mListener;
@@ -83,6 +85,20 @@ public class PlatesFragment extends Fragment {
         List<PlatesStructure> plates = db.platesList();
         adapterPlates= new AdapterPlates(plates);
         recyclerView.setAdapter(adapterPlates);
+
+        searchView = (SearchView) getActivity().findViewById(R.id.buscar);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapterPlates.getFilter().filter(newText);
+                return false;
+            }
+        });
         return view;
     }
 

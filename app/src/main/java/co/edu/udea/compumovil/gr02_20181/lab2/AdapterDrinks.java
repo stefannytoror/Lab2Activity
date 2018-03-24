@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,7 +25,7 @@ import co.edu.udea.compumovil.gr02_20181.lab2.DB.DrinksStructure;
  * Created by personal on 18/03/18.
  */
 
-public class AdapterDrinks  extends RecyclerView.Adapter<AdapterDrinks.DrinksViewH> /*implements Filterable*/{
+public class AdapterDrinks  extends RecyclerView.Adapter<AdapterDrinks.DrinksViewH> implements Filterable{
 
     OnListener listen;
 
@@ -39,6 +41,7 @@ public class AdapterDrinks  extends RecyclerView.Adapter<AdapterDrinks.DrinksVie
 
     List<DrinksStructure> drinks;
     List<DrinksStructure> drinksArray = new ArrayList<DrinksStructure>();
+    Filter filter;
 
     public AdapterDrinks(List<DrinksStructure> drinks){
         this.drinks = drinks;
@@ -103,6 +106,57 @@ public class AdapterDrinks  extends RecyclerView.Adapter<AdapterDrinks.DrinksVie
     }
     public interface OnListener{
         public void getPosition(Bundle datos);
+    }
+
+    @Override
+    public Filter getFilter() {
+        if(filter==null){filter = new myFilter(this,drinks);}
+        return filter;
+    }
+    class myFilter extends Filter {
+
+        AdapterDrinks adapterDrinks;
+        final List<DrinksStructure> drinks;
+        List<DrinksStructure> drinksArray;
+
+        public myFilter(AdapterDrinks adapter, List<DrinksStructure> drinks) {
+            super();
+            this.adapterDrinks = adapter;
+            this.drinks = drinks;
+            this.drinksArray = new ArrayList<DrinksStructure>();
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            drinksArray.clear();
+            final FilterResults results = new FilterResults();
+
+            if (constraint.length() == 0) {
+                drinksArray.addAll(drinks);
+            } else {
+                final String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (final DrinksStructure drink : drinks) {
+                    if (drink.getDrink_name().toLowerCase().trim().contains(filterPattern)) {
+                        drinksArray.add(drink);
+                    }
+                }
+            }
+            results.values = drinksArray;
+            results.count = drinksArray.size();
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            try {
+                adapterDrinks.drinksArray.clear();
+                adapterDrinks.drinksArray.addAll((ArrayList<DrinksStructure>) results.values);
+                adapterDrinks.notifyDataSetChanged();
+            }catch (Exception e){
+
+            }
+        }
     }
 
 }

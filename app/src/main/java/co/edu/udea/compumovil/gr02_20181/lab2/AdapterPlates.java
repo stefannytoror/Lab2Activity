@@ -10,16 +10,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.DrinksStructure;
 import co.edu.udea.compumovil.gr02_20181.lab2.DB.PlatesStructure;
 
 
-public class AdapterPlates  extends RecyclerView.Adapter<AdapterPlates.PlatesViewH> /*implements Filterable*/{
+public class AdapterPlates  extends RecyclerView.Adapter<AdapterPlates.PlatesViewH> implements Filterable{
 
     OnListener listen;
 
@@ -35,6 +38,7 @@ public class AdapterPlates  extends RecyclerView.Adapter<AdapterPlates.PlatesVie
 
     List<PlatesStructure> plates;
     List<PlatesStructure> platesArray = new ArrayList<PlatesStructure>();
+    Filter filter;
 
     public AdapterPlates(List<PlatesStructure> plates){
         this.plates = plates;
@@ -109,6 +113,57 @@ public class AdapterPlates  extends RecyclerView.Adapter<AdapterPlates.PlatesVie
     }
     public interface OnListener{
         public void getPositionPlates(Bundle datos);
+    }
+
+    @Override
+    public Filter getFilter() {
+        if(filter==null){filter = new myFilter(this,plates);}
+        return filter;
+    }
+    class myFilter extends Filter {
+
+        AdapterPlates adapterPlates;
+        final List<PlatesStructure> plates;
+        List<PlatesStructure> platesArray;
+
+        public myFilter(AdapterPlates adapterPlates, List<PlatesStructure> plates) {
+            super();
+            this.adapterPlates = adapterPlates;
+            this.plates = plates;
+            this.platesArray = new ArrayList<PlatesStructure>();
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            platesArray.clear();
+            final FilterResults results = new FilterResults();
+
+            if (constraint.length() == 0) {
+                platesArray.addAll(plates);
+            } else {
+                final String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (final PlatesStructure plate : plates) {
+                    if (plate.getPlate_name().toLowerCase().trim().contains(filterPattern)) {
+                        platesArray.add(plate);
+                    }
+                }
+            }
+            results.values = platesArray;
+            results.count = platesArray.size();
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            try {
+                adapterPlates.platesArray.clear();
+                adapterPlates.platesArray.addAll((ArrayList<PlatesStructure>) results.values);
+                adapterPlates.notifyDataSetChanged();
+            }catch (Exception e){
+
+            }
+        }
     }
 
 }

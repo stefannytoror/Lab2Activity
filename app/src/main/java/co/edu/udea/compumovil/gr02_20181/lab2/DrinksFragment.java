@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class DrinksFragment extends Fragment {
     private String mParam2;
     public RecyclerView recyclerView = null;
     public AdapterDrinks adapterDrinks;
+    public SearchView searchView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -83,6 +85,20 @@ public class DrinksFragment extends Fragment {
         List<DrinksStructure> drinks = db.drinksList();
         adapterDrinks = new AdapterDrinks(drinks);
         recyclerView.setAdapter(adapterDrinks);
+
+        searchView = (SearchView) getActivity().findViewById(R.id.buscar);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapterDrinks.getFilter().filter(newText);
+                return false;
+            }
+        });
         return view;
     }
 
