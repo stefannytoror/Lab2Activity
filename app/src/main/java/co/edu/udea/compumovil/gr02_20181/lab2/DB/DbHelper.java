@@ -41,9 +41,9 @@ public class DbHelper  extends SQLiteOpenHelper {
 
         Bitmap user_picture = BitmapFactory.decodeResource(cont.getResources(), R.drawable.future);
 
-        String user_pictureString = encodeImage(user_picture);
+       /* String user_pictureString = encodeImage(user_picture);
         UserStructure user = new UserStructure("a", "a@gmail.com", "a", user_pictureString);
-        db.insert(RestaurantDB.TABLE_USER, null, user.toContentValues());
+        db.insert(RestaurantDB.TABLE_USER, null, user.toContentValues());*/
 
 
         //drinks table

@@ -3,10 +3,11 @@
 
     <PreferenceCategory android:title="Perfil">
 
-        <SwitchPreference
+        <android.support.v7.preference.SwitchPreferenceCompact
             android:id="@+id/preferenceKeepSession"
+            android:checked="true"
             android:defaultValue="false"
-            android:key="switch_preference_1"
+            android:key="switch_preference"
             android:title="Mantener sesion en el dispositivo" />
         <EditTextPreference
             android:id="@+id/preferenceEditProfile"

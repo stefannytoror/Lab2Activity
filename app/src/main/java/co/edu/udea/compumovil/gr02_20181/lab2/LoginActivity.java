@@ -3,6 +3,8 @@ package co.edu.udea.compumovil.gr02_20181.lab2;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -15,20 +17,77 @@ import android.util.Log;
 import android.view.View;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import co.edu.udea.compumovil.gr02_20181.lab2.DB.DbHelper;
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.RestaurantDB;
 
 public class LoginActivity extends AppCompatActivity {
-
     private static final int REQUEST_IMAGE_GALLERY = 98;
-
+    String email;
+    long Delay = 3000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+       /* FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame_loginContainer, new StartLoginFragment());
+        ft.commit();*/
+
+
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frame_loginContainer, new SplashFragment());
         ft.commit();
+        getSupportActionBar().hide();
+
+        // Create a Timer
+        Timer RunSplash = new Timer();
+
+        // Task to do when the timer ends
+        final TimerTask ShowSplash = new TimerTask() {
+            @Override
+            public void run() {
+
+                DbHelper dbHelper = new DbHelper(getApplicationContext());
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+                Cursor c = db.rawQuery("SELECT "+ RestaurantDB.ColumnUser.USER_EMAIL +
+                        " FROM " + RestaurantDB.TABLE_USER +
+                        " WHERE " + RestaurantDB.ColumnUser.USER_STATE+ " = 'ACTIVO' " , null);
+
+
+                if(c.moveToFirst()){
+                    email = c.getString(0);
+                    Intent other = new Intent(getApplicationContext(), NDRestaurant.class);
+                    Bundle bundleP = new Bundle();
+                    bundleP.putString(RestaurantDB.ColumnUser.USER_EMAIL,email);
+                    other.putExtras(bundleP);
+                    finish();
+                    startActivity(other);
+
+
+                }else{
+
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.frame_loginContainer, new StartLoginFragment());
+                    ft.commit();
+
+                }
+
+
+
+
+
+            }
+        };
+
+        // Start the timer
+        RunSplash.schedule(ShowSplash, Delay);
+
+
+
+
     }
 
     public void photoGallery(View v) {
