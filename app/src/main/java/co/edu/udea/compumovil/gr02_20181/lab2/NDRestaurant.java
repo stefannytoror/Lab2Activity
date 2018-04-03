@@ -132,6 +132,14 @@ public class NDRestaurant extends AppCompatActivity
                     .commit();
 
         }
+        else if (id == R.id.nav_config) {
+            fragment = new PreferenceFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container,fragment)
+                    .commit();
+
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
