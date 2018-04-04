@@ -59,14 +59,37 @@ public class DbHelper  extends SQLiteOpenHelper {
         Bitmap imageBitmap;
         String picture;
 
-        imageBitmap = BitmapFactory.decodeResource(cont.getResources(), R.drawable.future);
+        imageBitmap = BitmapFactory.decodeResource(cont.getResources(), R.drawable.bebida2);
         picture = encodeImage(imageBitmap);
         DrinksStructure drink1 = new DrinksStructure("Limonada",2500,
                 "Limón, agua y azucar",picture);
 
-
         //db.insert(RestaurantDB.TABLE_DRINKS, null, drink2.toContentValues());
         db.insert(RestaurantDB.TABLE_DRINKS, null, drink1.toContentValues());
+
+        imageBitmap = BitmapFactory.decodeResource(cont.getResources(), R.drawable.bebida1);
+        picture = encodeImage(imageBitmap);
+        DrinksStructure drink2 = new DrinksStructure("Jugo de Fresa",2500,
+                "Pulpa de fresa y agua",picture);
+        db.insert(RestaurantDB.TABLE_DRINKS, null, drink2.toContentValues());
+
+        imageBitmap = BitmapFactory.decodeResource(cont.getResources(), R.drawable.bebida3);
+        picture = encodeImage(imageBitmap);
+        DrinksStructure drink3 = new DrinksStructure("Batido de coco",2500,
+                "Agua de coco, coco rayado y agua",picture);
+        db.insert(RestaurantDB.TABLE_DRINKS, null, drink3.toContentValues());
+
+        imageBitmap = BitmapFactory.decodeResource(cont.getResources(), R.drawable.bebida4);
+        picture = encodeImage(imageBitmap);
+        DrinksStructure drink4 = new DrinksStructure("Jugo Tropical",2500,
+                "Pulpa de frutas, frutiño y agua",picture);
+        db.insert(RestaurantDB.TABLE_DRINKS, null, drink4.toContentValues());
+
+        imageBitmap = BitmapFactory.decodeResource(cont.getResources(), R.drawable.bebida5);
+        picture = encodeImage(imageBitmap);
+        DrinksStructure drink5 = new DrinksStructure("Brebaje Rojo",2500,
+                "Pulpa de frutos rojos y agua",picture);
+        db.insert(RestaurantDB.TABLE_DRINKS, null, drink5.toContentValues());
 
 
         //Plates table
@@ -81,16 +104,48 @@ public class DbHelper  extends SQLiteOpenHelper {
                 + "UNIQUE (" + RestaurantDB.ColumnPlates.PLATE_NAME + "),"
                 + "PRIMARY KEY (" + RestaurantDB.ColumnPlates.PLATE_NAME + "))");
 
-        imageBitmap = BitmapFactory.decodeResource(cont.getResources(),R.drawable.future);
-        picture = encodeImage(imageBitmap);
-        PlatesStructure plate2 = new PlatesStructure("Arroz","Tarde",
-                "Entrada",20000,"00:45",
-                "Agua,sal al gusto, arroz",picture);
-        PlatesStructure plate1 = new PlatesStructure("Huevo","Mañana",
-                "Fuerte", 3000,"00:15","Huevo y agua caliente", picture);
 
-        db.insert(RestaurantDB.TABLE_PLATES, null, plate2.toContentValues());
+
+        imageBitmap = BitmapFactory.decodeResource(cont.getResources(),R.drawable.plato1);
+        picture = encodeImage(imageBitmap);
+        PlatesStructure plate1 = new PlatesStructure("Chuzo de carne",
+                "Tarde",
+                "Entrada", 3000,"02:15",
+                "Carne , lechuga tomate", picture);
         db.insert(RestaurantDB.TABLE_PLATES, null, plate1.toContentValues());
+
+        imageBitmap = BitmapFactory.decodeResource(cont.getResources(),R.drawable.plato2);
+        picture = encodeImage(imageBitmap);
+        PlatesStructure plate2 = new PlatesStructure("Nueva delicia",
+                "Mañana",
+                "Entrada", 3000,"02:15",
+                "harina,huevos,granos", picture);
+        db.insert(RestaurantDB.TABLE_PLATES, null, plate2.toContentValues());
+
+        imageBitmap = BitmapFactory.decodeResource(cont.getResources(),R.drawable.plato3);
+        picture = encodeImage(imageBitmap);
+        PlatesStructure plate3 = new PlatesStructure("sancocho",
+                "Tarde",
+                "Plato fuerte", 3000,"05:15",
+                "mazorca,agua, papa,platano", picture);
+        db.insert(RestaurantDB.TABLE_PLATES, null, plate3.toContentValues());
+
+        imageBitmap = BitmapFactory.decodeResource(cont.getResources(),R.drawable.plato4);
+        picture = encodeImage(imageBitmap);
+        PlatesStructure plate4 = new PlatesStructure("Carne con ensalada",
+                "Noche",
+                "Plato fuerte", 3000,"02:15",
+                "carne, salsa de la casa, lechuga y tomate", picture);
+        db.insert(RestaurantDB.TABLE_PLATES, null, plate4.toContentValues());
+
+
+        imageBitmap = BitmapFactory.decodeResource(cont.getResources(),R.drawable.plato5);
+        picture = encodeImage(imageBitmap);
+        PlatesStructure plate5 = new PlatesStructure("Pasta",
+                "Noche",
+                "Plato fuerte", 3000,"02:15",
+                "Pasta y salsa", picture);
+        db.insert(RestaurantDB.TABLE_PLATES, null, plate5.toContentValues());
 
 
     }
