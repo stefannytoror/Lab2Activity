@@ -1,8 +1,11 @@
 package co.edu.udea.compumovil.gr02_20181.lab2;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,10 +29,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Adapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
 import co.edu.udea.compumovil.gr02_20181.lab2.DB.DbHelper;
+import co.edu.udea.compumovil.gr02_20181.lab2.DB.RestaurantDB;
 
 public class NDRestaurant extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -37,7 +42,7 @@ public class NDRestaurant extends AppCompatActivity
                                     AdapterPlates.OnListener {
 
     private static final int REQUEST_IMAGE_GALLERY = 31;
-
+    String email;
     //false for plates true for Drinks
     boolean plateOrDrink = false;
 
@@ -110,7 +115,7 @@ public class NDRestaurant extends AppCompatActivity
             fragment = new PlatesFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.container,fragment)
+                    .replace(R.id.container, fragment)
                     .commit();
 
         } else if (id == R.id.nav_drinks) {
@@ -119,7 +124,7 @@ public class NDRestaurant extends AppCompatActivity
             fragment = new DrinksFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.container,fragment)
+                    .replace(R.id.container, fragment)
                     .commit();
 
         } else if (id == R.id.nav_profile) {
@@ -128,28 +133,45 @@ public class NDRestaurant extends AppCompatActivity
             fragment = new UserProfileFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.container,fragment)
+                    .replace(R.id.container, fragment)
                     .commit();
 
-        }
-        else if (id == R.id.nav_config) {
+        } else if (id == R.id.nav_config) {
             fragment = new PreferenceFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.container,fragment)
+                    .replace(R.id.container, fragment)
                     .commit();
 
+        } else if (id == R.id.nav_logOut) {
+            DbHelper dbHelper = new DbHelper(getApplication().getApplicationContext());
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(RestaurantDB.ColumnUser.USER_STATE, "INACTIVO");
+            db.updateWithOnConflict(RestaurantDB.TABLE_USER, contentValues,
+                    RestaurantDB.ColumnUser.USER_EMAIL + "='" + email + "'", null, SQLiteDatabase.CONFLICT_IGNORE);
+            db.close();
+            //first = true;
+            Intent pageLogin = new Intent(getApplication().getApplicationContext(), LoginActivity.class);
+            Bundle bundleP = new Bundle();
+            onSaveInstanceState(bundleP);
+            pageLogin.putExtras(bundleP);
+            finish();
+            startActivity(pageLogin);
+            Toast.makeText(getApplication().getApplicationContext(), "Sesion Cerrada", Toast.LENGTH_SHORT).show();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
     }
 
 
 
+
+
     public void photoGallery(View v) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
         switch (v.getId()) {
 
@@ -173,17 +195,64 @@ public class NDRestaurant extends AppCompatActivity
             photoPickerIntent.putExtra("aspectY",1);
             photoPickerIntent.putExtra("scale",true);
             photoPickerIntent.putExtra("outputFormat",Bitmap.CompressFormat.JPEG.toString());
+            photoPickerIntent.putExtra("return-data",true);
+            try {
 
-            startActivityForResult(photoPickerIntent, REQUEST_IMAGE_GALLERY);
+                photoPickerIntent.putExtra("return-data", true);
+                startActivityForResult(photoPickerIntent, REQUEST_IMAGE_GALLERY);
+
+            } catch (ActivityNotFoundException e) {
+
+            }
+            //startActivityForResult(photoPickerIntent, REQUEST_IMAGE_GALLERY);
         }
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_OK) {
-            Uri imageUri = data.getData();
+
             Bundle b = data.getExtras();
-            try {
+            //Uri imageUri = data.getData();
+            Log.d("bundle", "onActivityResult: " + b);
+            if (b != null) {
+                Log.d("bundle", "entro al if del bundle " + b);
+                Bitmap selectedImage = b.getParcelable("data");
+
+                if(plateOrDrink){
+                    ImageView drinkImage = (ImageView) findViewById(R.id.imgBebida) ;
+                    drinkImage.setImageBitmap(selectedImage);
+                    AddDrinksFragment frag = (AddDrinksFragment) getSupportFragmentManager().findFragmentByTag("drinkFragmentTag");
+                    if (frag != null) {
+                        String TAG = "que";
+                        Log.d(TAG, "onActivityResult: guardo la imagen de bebida");
+                        DbHelper db = new DbHelper(getApplicationContext());
+                        frag.setPhoto(db.encodeImage(selectedImage));
+
+                    }
+                }
+                if(!plateOrDrink)
+                {
+                    Log.d("que", "onActivityResult: entro al else");
+                    ImageView plateImage = (ImageView) findViewById(R.id.imgPlato) ;
+                    plateImage.setImageBitmap(selectedImage);
+                    AddPlatesFragment frag = (AddPlatesFragment) getSupportFragmentManager().
+                            findFragmentByTag("platesFragmentTag");
+                    Log.d("que", " imagen de plato");
+                    if (frag != null) {
+                        String TAG = "que";
+                        Log.d(TAG, "onActivityResult: guardo la imagen de plato");
+                        DbHelper db = new DbHelper(getApplicationContext());
+                        frag.setPhoto(db.encodeImage(selectedImage));
+
+                    }
+                }
+
+            }
+            Bitmap selectedImage = b.getParcelable("data");
+
+            /*try {
                 //Fragment fragment = new AddDrinksFragment();
                 Bitmap selectedImage = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
                 Bitmap selectedImagec = b.getParcelable("data");
@@ -222,7 +291,7 @@ public class NDRestaurant extends AppCompatActivity
 
 
             } catch (IOException e) {
-            }
+            }*/
 
         }
     }
