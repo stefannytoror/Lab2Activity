@@ -212,51 +212,9 @@ public class NDRestaurant extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_OK) {
-
-            Bundle b = data.getExtras();
-            //Uri imageUri = data.getData();
-            Log.d("bundle", "onActivityResult: " + b);
-            if (b != null) {
-                Log.d("bundle", "entro al if del bundle " + b);
-                Bitmap selectedImage = b.getParcelable("data");
-
-                if(plateOrDrink){
-                    ImageView drinkImage = (ImageView) findViewById(R.id.imgBebida) ;
-                    drinkImage.setImageBitmap(selectedImage);
-                    AddDrinksFragment frag = (AddDrinksFragment) getSupportFragmentManager().findFragmentByTag("drinkFragmentTag");
-                    if (frag != null) {
-                        String TAG = "que";
-                        Log.d(TAG, "onActivityResult: guardo la imagen de bebida");
-                        DbHelper db = new DbHelper(getApplicationContext());
-                        frag.setPhoto(db.encodeImage(selectedImage));
-
-                    }
-                }
-                if(!plateOrDrink)
-                {
-                    Log.d("que", "onActivityResult: entro al else");
-                    ImageView plateImage = (ImageView) findViewById(R.id.imgPlato) ;
-                    plateImage.setImageBitmap(selectedImage);
-                    AddPlatesFragment frag = (AddPlatesFragment) getSupportFragmentManager().
-                            findFragmentByTag("platesFragmentTag");
-                    Log.d("que", " imagen de plato");
-                    if (frag != null) {
-                        String TAG = "que";
-                        Log.d(TAG, "onActivityResult: guardo la imagen de plato");
-                        DbHelper db = new DbHelper(getApplicationContext());
-                        frag.setPhoto(db.encodeImage(selectedImage));
-
-                    }
-                }
-
-            }
-            Bitmap selectedImage = b.getParcelable("data");
-
-            /*try {
-                //Fragment fragment = new AddDrinksFragment();
+            Uri imageUri = data.getData();
+            try {
                 Bitmap selectedImage = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
-                Bitmap selectedImagec = b.getParcelable("data");
-
                 if(plateOrDrink){
                     ImageView drinkImage = (ImageView) findViewById(R.id.imgBebida) ;
                     drinkImage.setImageBitmap(selectedImage);
@@ -285,17 +243,11 @@ public class NDRestaurant extends AppCompatActivity
 
                     }
                 }
-
-
-                //getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment,"drinkFragmentTag").addToBackStack(null).commit();
-
-
             } catch (IOException e) {
-            }*/
+            }
 
         }
     }
-
     @Override
     public void getPosition(Bundle datos) {
         Fragment frag = new ShowCompleteInfoDrink();

@@ -31,12 +31,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-       /* FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_loginContainer, new StartLoginFragment());
-        ft.commit();*/
-
-
-
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame_loginContainer, new SplashFragment());
         ft.commit();
@@ -68,26 +62,14 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 }else{
-
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.frame_loginContainer, new StartLoginFragment());
                     ft.commit();
-
                 }
-
-
-
-
-
             }
         };
-
         // Start the timer
         RunSplash.schedule(ShowSplash, Delay);
-
-
-
-
     }
 
     public void photoGallery(View v) {

@@ -39,11 +39,12 @@ public class DbHelper  extends SQLiteOpenHelper {
                 + "PRIMARY KEY (" + RestaurantDB.ColumnUser.USER_EMAIL + "))");
 
 
-        Bitmap user_picture = BitmapFactory.decodeResource(cont.getResources(), R.drawable.future);
 
-       /* String user_pictureString = encodeImage(user_picture);
+        Bitmap user_picture = BitmapFactory.decodeResource(cont.getResources(), R.drawable.future);
+        String user_pictureString = encodeImage(user_picture);
+
         UserStructure user = new UserStructure("a", "a@gmail.com", "a", user_pictureString);
-        db.insert(RestaurantDB.TABLE_USER, null, user.toContentValues());*/
+        db.insert(RestaurantDB.TABLE_USER, null, user.toContentValues());
 
 
         //drinks table
@@ -58,14 +59,13 @@ public class DbHelper  extends SQLiteOpenHelper {
         Bitmap imageBitmap;
         String picture;
 
-        imageBitmap = BitmapFactory.decodeResource(cont.getResources(),R.drawable.future);
+        imageBitmap = BitmapFactory.decodeResource(cont.getResources(), R.drawable.future);
         picture = encodeImage(imageBitmap);
-        DrinksStructure drink2 = new DrinksStructure("Jugo muy maluco",2500,
-                "Agua y veneno",picture);
-        DrinksStructure drink1 = new DrinksStructure("Jugo muy deli",2000,
-                "Agua y frutilla picadilla",picture);
+        DrinksStructure drink1 = new DrinksStructure("Limonada",2500,
+                "Limón, agua y azucar",picture);
 
-        db.insert(RestaurantDB.TABLE_DRINKS, null, drink2.toContentValues());
+
+        //db.insert(RestaurantDB.TABLE_DRINKS, null, drink2.toContentValues());
         db.insert(RestaurantDB.TABLE_DRINKS, null, drink1.toContentValues());
 
 

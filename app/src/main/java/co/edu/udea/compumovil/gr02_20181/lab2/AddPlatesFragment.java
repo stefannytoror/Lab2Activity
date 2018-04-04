@@ -53,10 +53,6 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
 
     //informacion del picker
     private TextView mTimeDisplay;
-    private TextView mDateDisplay;
-    private int mYear;
-    private int mMonth;
-    private int mDay;
     private int mHour;
     private int mMinute;
 
@@ -92,9 +88,6 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
         //Organizar cuando se haga el layout
 
         final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
 
@@ -128,17 +121,6 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
             mListener.onFragmentInteraction(uri);
         }
     }
-
-   /* @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }*/
 
     @Override
     public void onDetach() {
@@ -226,11 +208,9 @@ public class AddPlatesFragment extends Fragment implements TimePickerDialog.OnTi
             typePlateDB = typePlateS.getText().toString();
         }
 
-
         //price
         addPlate = (EditText) getView().findViewById(R.id.txtPrecioPlato);
         pricePlateDB = addPlate.getText().toString();
-
 
         addtimePlate = (TextView) getView().findViewById(R.id.txtTiempoPlato);
         timePlateDB = addtimePlate.getText().toString();

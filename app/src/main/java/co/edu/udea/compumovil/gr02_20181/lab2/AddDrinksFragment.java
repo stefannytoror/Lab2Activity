@@ -95,17 +95,6 @@ public class AddDrinksFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-   /* @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }*/
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -150,11 +139,11 @@ public class AddDrinksFragment extends Fragment implements View.OnClickListener 
 
 
             if (photo == null) {
-                Toast.makeText(getContext(), "no se pudo asignar foto", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "No se pudo asignar foto", Toast.LENGTH_SHORT).show();
             }
 
             if (nameDrinkDB.equals("") || priceDrinkDB.equals("") || ingredientsDrinkDB.equals("") || photo == null) {
-                Toast.makeText(getContext(), "Información Incompleta", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Información incompleta", Toast.LENGTH_SHORT).show();
             } else {
 
                 int priceDrinkDb = Integer.parseInt(priceDrinkDB);
